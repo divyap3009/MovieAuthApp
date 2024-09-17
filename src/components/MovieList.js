@@ -23,21 +23,15 @@ const MovieList = () => {
         });
 
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error("Failed to fetch movies");
         }
 
         const data = await response.json();
-
-        // Check if 'result' exists and is an array
-        if (data.result && Array.isArray(data.result)) {
-          setMovies(data.result);
-        } else {
-          throw new Error("Invalid data format");
-        }
-        setLoading(false);
+        setMovies(data.result);  
+        setLoading(false); 
       } catch (err) {
-        setError(`Failed to fetch movies: ${err.message}`);
-        setLoading(false);
+        setError("Failed to fetch movies");
+        setLoading(false);  
       }
     };
 
@@ -59,8 +53,8 @@ const MovieList = () => {
         {movies.map((movie) => (
           <li key={movie._id} className="movie-item">
             <strong className="movie-title">{movie.title}</strong>
-            <p className="movie-info">Director: {movie.director}</p>
-            <p className="movie-info">Stars: {movie.stars}</p>
+            <p className="movie-info">Director: {movie.director.join(", ")}</p>
+            <p className="movie-info">Stars: {movie.stars.join(", ")}</p>
             <p className="movie-info">Genre: {movie.genre}</p>
             <p className="movie-info">Language: {movie.language}</p>
             <p className="movie-info">Votes: {movie.voting}</p>
