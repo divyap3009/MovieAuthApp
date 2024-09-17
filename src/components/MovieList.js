@@ -28,27 +28,21 @@ const MovieList = () => {
 
         const data = await response.json();
 
-        // Print the full response and movies data to the console
-        console.log("API Response:", data);
-        console.log("Movies Data:", data.result);
-
-        setMovies(data.result);
+        // Check if 'result' exists and is an array
+        if (data.result && Array.isArray(data.result)) {
+          setMovies(data.result);
+        } else {
+          throw new Error("Invalid data format");
+        }
         setLoading(false);
       } catch (err) {
-        // Print error details
-        console.error("Error fetching movies:", err);
-        setError("Failed to fetch movies");
+        setError(`Failed to fetch movies: ${err.message}`);
         setLoading(false);
       }
     };
 
     fetchMovies();
   }, []);
-
-  // Log whenever the movies state updates
-  useEffect(() => {
-    console.log("Movies state updated:", movies);
-  }, [movies]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -62,18 +56,17 @@ const MovieList = () => {
     <div className="movie-list-container">
       <h2 className="movie-title">Movie List</h2>
       <ul>
-        {movies.map((movie) => {
-          // Log each movie item before rendering it
-          console.log("Rendering Movie:", movie);
-          return (
-            <li key={movie.id} className="movie-item">
-              <strong className="movie-title">{movie.title}</strong>
-              <p className="movie-info">Genre: {movie.genre}</p>
-              <p className="movie-info">Votes: {movie.votes}</p>
-              <button className="vote-btn">Vote</button>
-            </li>
-          );
-        })}
+        {movies.map((movie) => (
+          <li key={movie._id} className="movie-item">
+            <strong className="movie-title">{movie.title}</strong>
+            <p className="movie-info">Director: {movie.director}</p>
+            <p className="movie-info">Stars: {movie.stars}</p>
+            <p className="movie-info">Genre: {movie.genre}</p>
+            <p className="movie-info">Language: {movie.language}</p>
+            <p className="movie-info">Votes: {movie.voting}</p>
+            <button className="vote-btn">Vote</button>
+          </li>
+        ))}
       </ul>
     </div>
   );
