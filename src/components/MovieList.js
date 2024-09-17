@@ -53,8 +53,8 @@ const MovieList = () => {
         {movies.map((movie) => (
           <li key={movie._id} className="movie-item">
             <strong className="movie-title">{movie.title}</strong>
-            <p className="movie-info">Director: {movie.director.join(", ")}</p>
-            <p className="movie-info">Stars: {movie.stars.join(", ")}</p>
+            <p className="movie-info">Director: {movie.director}</p>
+            <p className="movie-info">Stars: {movie.stars)}</p>
             <p className="movie-info">Genre: {movie.genre}</p>
             <p className="movie-info">Language: {movie.language}</p>
             <p className="movie-info">Votes: {movie.voting}</p>
